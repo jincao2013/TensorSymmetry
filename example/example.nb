@@ -1,0 +1,736 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     28367,        728]
+NotebookOptionsPosition[     26703,        688]
+NotebookOutlinePosition[     27133,        705]
+CellTagsIndexPosition[     27090,        702]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Examples", "Title",
+ CellChangeTimes->{{3.899432086843699*^9, 3.899432108502206*^9}, {
+  3.967711533139761*^9, 
+  3.967711535525489*^9}},ExpressionUUID->"ad8afd0b-1ae5-4962-ba02-\
+41009f429a54"],
+
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<TensorSymmetry`\>\"", "]"}]], "Input",
+ CellLabel->
+  "In[212]:=",ExpressionUUID->"c1801cb7-bc42-4a30-acae-e32044bdb2ed"],
+
+Cell[CellGroupData[{
+
+Cell["Restricted by Spin point group", "Subtitle",
+ CellChangeTimes->{{3.899431955388132*^9, 3.899431968843611*^9}, {
+   3.8994320059072847`*^9, 3.899432008153343*^9}, 3.8994320553346367`*^9, {
+   3.89943221704652*^9, 3.899432286826437*^9}, 3.899432317009458*^9, {
+   3.96771157812735*^9, 3.9677115838535547`*^9}, 
+   3.967760494517475*^9},ExpressionUUID->"3163555b-f62a-4c5b-9201-\
+39d5c9dce51c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Select", " ", "the", " ", "intrinsic", " ", "symmetry"}], " ", 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "fill", " ", "the", " ", "intrinsic", " ", "table", " ", "with", " ", 
+     "desired", " ", "ones"}], ",", " ", 
+    RowBox[{"set", " ", 
+     RowBox[{"{", "}"}], " ", "for", " ", "none", " ", "intrinsic", " ", 
+     RowBox[{"symmetry", "."}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"internalSymm", "=", 
+     RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+     "Set", " ", "num", " ", "of", " ", "axial", " ", "and", " ", "TR"}], "-", 
+     RowBox[{
+     "odd", " ", "component", " ", "of", " ", "the", " ", "tensor"}]}], " ", 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"nRaxial", ",", "nTR"}], "}"}], "=", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "3"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"Set", " ", "operations", " ", 
+     RowBox[{"{", 
+      RowBox[{"XU", "|", "R"}], "}"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"nSSG", "=", "nSSGColinear"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"qSSG", "=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"1", ",", "id", ",", "inv"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "1"}], ",", "id", ",", "C4z"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"1", ",", "id", ",", "C2xy"}], "}"}]}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Set", " ", "rotation", " ", "spec", " ", "spin", " ", "and", " ", "orbi",
+      " ", "for", " ", "u", " ", "and", " ", "R", " ", "in", " ", 
+     RowBox[{"{", 
+      RowBox[{"X", "|", "u", "|", "R"}], "}"}]}], " ", "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"rotspec", "=", 
+     RowBox[{"{", 
+      RowBox[{"\"\<rotU\>\"", ",", "\"\<rotR\>\"", ",", "\"\<rotR\>\""}], 
+      "}"}]}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Set", " ", "general", " ", "form", " ", "of", " ", "rank4", " ", 
+     "tensor"}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"chi", "=", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       SubscriptBox["\[Chi]", 
+        RowBox[{"s", "<>", "a", "<>", "b"}]], ",", 
+       RowBox[{"{", 
+        RowBox[{"s", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<x\>\"", ",", "\"\<y\>\"", ",", "\"\<z\>\""}], "}"}]}], 
+        "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"a", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<x\>\"", ",", "\"\<y\>\"", ",", "\"\<z\>\""}], "}"}]}], 
+        "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"b", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<x\>\"", ",", "\"\<y\>\"", ",", "\"\<z\>\""}], "}"}]}], 
+        "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"apply", " ", "symmetry"}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"chisym", ",", "condition"}], "}"}], "=", 
+     RowBox[{"getSSGEnforcedTensor", "[", 
+      RowBox[{"rotspec", ",", "chi", ",", 
+       RowBox[{"nSSG", "~", "Join", "~", "qSSG"}], ",", "internalSymm", ",", 
+       "nRaxial", ",", "nTR"}], "]"}]}], ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.9677113063434057`*^9, 3.967711310484885*^9}, {
+  3.967711608322586*^9, 3.967711751183305*^9}, {3.967711809218381*^9, 
+  3.967711907542293*^9}, {3.967759740285242*^9, 3.967759811647358*^9}, {
+  3.967760153383196*^9, 3.96776017843252*^9}, {3.967760271352317*^9, 
+  3.967760307695652*^9}, {3.967760519938046*^9, 3.967760522018828*^9}, {
+  3.967762308843417*^9, 3.967762325812348*^9}, {3.96776302063557*^9, 
+  3.9677630448142977`*^9}},ExpressionUUID->"d22ecfde-1d48-48fa-adac-\
+e6d7718c9630"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\\!\\(\\*SubscriptBox[\\(\[Chi]\\), \\(w/o\\\\ symm\\)]\\)  = \
+\"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{
+     TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {
+          SubscriptBox["\[Chi]", "\<\"xxx\"\>"], 
+          SubscriptBox["\[Chi]", "\<\"xxy\"\>"], 
+          SubscriptBox["\[Chi]", "\<\"xxz\"\>"]},
+         {
+          SubscriptBox["\[Chi]", "\<\"xyx\"\>"], 
+          SubscriptBox["\[Chi]", "\<\"xyy\"\>"], 
+          SubscriptBox["\[Chi]", "\<\"xyz\"\>"]},
+         {
+          SubscriptBox["\[Chi]", "\<\"xzx\"\>"], 
+          SubscriptBox["\[Chi]", "\<\"xzy\"\>"], 
+          SubscriptBox["\[Chi]", "\<\"xzz\"\>"]}
+        },
+        GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}}], "\[NoBreak]", ")"}],
+      Function[BoxForm`e$, 
+       MatrixForm[BoxForm`e$]]], ",", 
+     TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {
+          SubscriptBox["\[Chi]", "\<\"yxx\"\>"], 
+          SubscriptBox["\[Chi]", "\<\"yxy\"\>"], 
+          SubscriptBox["\[Chi]", "\<\"yxz\"\>"]},
+         {
+          SubscriptBox["\[Chi]", "\<\"yyx\"\>"], 
+          SubscriptBox["\[Chi]", "\<\"yyy\"\>"], 
+          SubscriptBox["\[Chi]", "\<\"yyz\"\>"]},
+         {
+          SubscriptBox["\[Chi]", "\<\"yzx\"\>"], 
+          SubscriptBox["\[Chi]", "\<\"yzy\"\>"], 
+          SubscriptBox["\[Chi]", "\<\"yzz\"\>"]}
+        },
+        GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}}], "\[NoBreak]", ")"}],
+      Function[BoxForm`e$, 
+       MatrixForm[BoxForm`e$]]], ",", 
+     TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {
+          SubscriptBox["\[Chi]", "\<\"zxx\"\>"], 
+          SubscriptBox["\[Chi]", "\<\"zxy\"\>"], 
+          SubscriptBox["\[Chi]", "\<\"zxz\"\>"]},
+         {
+          SubscriptBox["\[Chi]", "\<\"zyx\"\>"], 
+          SubscriptBox["\[Chi]", "\<\"zyy\"\>"], 
+          SubscriptBox["\[Chi]", "\<\"zyz\"\>"]},
+         {
+          SubscriptBox["\[Chi]", "\<\"zzx\"\>"], 
+          SubscriptBox["\[Chi]", "\<\"zzy\"\>"], 
+          SubscriptBox["\[Chi]", "\<\"zzz\"\>"]}
+        },
+        GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}}], "\[NoBreak]", ")"}],
+      Function[BoxForm`e$, 
+       MatrixForm[BoxForm`e$]]]}], "}"}]}],
+  SequenceForm["\!\(\*SubscriptBox[\(\[Chi]\), \(w/o\\ symm\)]\)  = ", {
+    MatrixForm[{{
+       Subscript[TensorSymmetry`\[Chi], "xxx"], 
+       Subscript[TensorSymmetry`\[Chi], "xxy"], 
+       Subscript[TensorSymmetry`\[Chi], "xxz"]}, {
+       Subscript[TensorSymmetry`\[Chi], "xyx"], 
+       Subscript[TensorSymmetry`\[Chi], "xyy"], 
+       Subscript[TensorSymmetry`\[Chi], "xyz"]}, {
+       Subscript[TensorSymmetry`\[Chi], "xzx"], 
+       Subscript[TensorSymmetry`\[Chi], "xzy"], 
+       Subscript[TensorSymmetry`\[Chi], "xzz"]}}], 
+    MatrixForm[{{
+       Subscript[TensorSymmetry`\[Chi], "yxx"], 
+       Subscript[TensorSymmetry`\[Chi], "yxy"], 
+       Subscript[TensorSymmetry`\[Chi], "yxz"]}, {
+       Subscript[TensorSymmetry`\[Chi], "yyx"], 
+       Subscript[TensorSymmetry`\[Chi], "yyy"], 
+       Subscript[TensorSymmetry`\[Chi], "yyz"]}, {
+       Subscript[TensorSymmetry`\[Chi], "yzx"], 
+       Subscript[TensorSymmetry`\[Chi], "yzy"], 
+       Subscript[TensorSymmetry`\[Chi], "yzz"]}}], 
+    MatrixForm[{{
+       Subscript[TensorSymmetry`\[Chi], "zxx"], 
+       Subscript[TensorSymmetry`\[Chi], "zxy"], 
+       Subscript[TensorSymmetry`\[Chi], "zxz"]}, {
+       Subscript[TensorSymmetry`\[Chi], "zyx"], 
+       Subscript[TensorSymmetry`\[Chi], "zyy"], 
+       Subscript[TensorSymmetry`\[Chi], "zyz"]}, {
+       Subscript[TensorSymmetry`\[Chi], "zzx"], 
+       Subscript[TensorSymmetry`\[Chi], "zzy"], 
+       Subscript[TensorSymmetry`\[Chi], "zzz"]}}]}],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.967711313876121*^9, 3.967711926532311*^9, 3.967712146439933*^9, 
+   3.9677603295788813`*^9, {3.967762311618236*^9, 3.9677623308399143`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[204]:=",ExpressionUUID->"55d945db-bfaa-4d7c-b401-66f440a97988"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\\!\\(\\*SubscriptBox[\\(\[Chi]\\), \\(with\\\\ symm\\)]\\) = \
+\"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{
+     TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", "0", "0"},
+         {"0", "0", "0"},
+         {"0", "0", "0"}
+        },
+        GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}}], "\[NoBreak]", ")"}],
+      Function[BoxForm`e$, 
+       MatrixForm[BoxForm`e$]]], ",", 
+     TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", "0", "0"},
+         {"0", "0", "0"},
+         {"0", "0", "0"}
+        },
+        GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}}], "\[NoBreak]", ")"}],
+      Function[BoxForm`e$, 
+       MatrixForm[BoxForm`e$]]], ",", 
+     TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", 
+          SubscriptBox["\[Chi]", "\<\"zxy\"\>"], "0"},
+         {
+          SubscriptBox["\[Chi]", "\<\"zxy\"\>"], "0", "0"},
+         {"0", "0", "0"}
+        },
+        GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}}], "\[NoBreak]", ")"}],
+      Function[BoxForm`e$, 
+       MatrixForm[BoxForm`e$]]]}], "}"}]}],
+  SequenceForm["\!\(\*SubscriptBox[\(\[Chi]\), \(with\\ symm\)]\) = ", {
+    MatrixForm[{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}], 
+    MatrixForm[{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}], 
+    MatrixForm[{{0, 
+       Subscript[TensorSymmetry`\[Chi], "zxy"], 0}, {
+       Subscript[TensorSymmetry`\[Chi], "zxy"], 0, 0}, {0, 0, 0}}]}],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.967711313876121*^9, 3.967711926532311*^9, 3.967712146439933*^9, 
+   3.9677603295788813`*^9, {3.967762311618236*^9, 3.967762330841792*^9}},
+ CellLabel->
+  "During evaluation of \
+In[204]:=",ExpressionUUID->"c40534d0-18cc-4ca4-95a2-0d1db0a02cf4"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"condition is: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"xxx\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"xxy\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"xxz\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"xyx\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"xyy\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"xyz\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"xzx\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"xzy\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"xzz\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"yxx\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"yxy\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"yxz\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"yyx\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"yyy\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"yyz\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"yzx\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"yzy\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"yzz\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"zxx\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"zxz\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"zyx\"\>"], "\[Rule]", 
+      SubscriptBox["\[Chi]", "\<\"zxy\"\>"]}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"zyy\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"zyz\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"zzx\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"zzy\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"zzz\"\>"], "\[Rule]", "0"}]}], "}"}]}],
+  SequenceForm[
+  "condition is: ", {
+   Subscript[TensorSymmetry`\[Chi], "xxx"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "xxy"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "xxz"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "xyx"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "xyy"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "xyz"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "xzx"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "xzy"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "xzz"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "yxx"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "yxy"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "yxz"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "yyx"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "yyy"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "yyz"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "yzx"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "yzy"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "yzz"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "zxx"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "zxz"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "zyx"] -> 
+    Subscript[TensorSymmetry`\[Chi], "zxy"], 
+    Subscript[TensorSymmetry`\[Chi], "zyy"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "zyz"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "zzx"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "zzy"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "zzz"] -> 0}],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.967711313876121*^9, 3.967711926532311*^9, 3.967712146439933*^9, 
+   3.9677603295788813`*^9, {3.967762311618236*^9, 3.967762330843474*^9}},
+ CellLabel->
+  "During evaluation of \
+In[204]:=",ExpressionUUID->"fdcf1f9d-e53a-4a7c-b1ee-52a243d4579a"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Restricted by Magnetic point group", "Subtitle",
+ CellChangeTimes->{{3.899431955388132*^9, 3.899431968843611*^9}, {
+   3.8994320059072847`*^9, 3.899432008153343*^9}, 3.8994320553346367`*^9, {
+   3.89943221704652*^9, 3.899432286826437*^9}, 3.899432317009458*^9, {
+   3.96771157812735*^9, 3.9677115838535547`*^9}, {3.9677604660386*^9, 
+   3.967760490591283*^9}},ExpressionUUID->"8c4c5ad6-7bd0-4e49-b30a-\
+9e3cbeae665f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Select", " ", "the", " ", "intrinsic", " ", "symmetry"}], " ", 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "fill", " ", "the", " ", "intrinsic", " ", "table", " ", "with", " ", 
+     "desired", " ", "ones"}], ",", " ", 
+    RowBox[{"set", " ", 
+     RowBox[{"{", "}"}], " ", "for", " ", "none", " ", "intrinsic", " ", 
+     RowBox[{"symmetry", "."}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"internalSymm", "=", 
+     RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+     "Set", " ", "num", " ", "of", " ", "axial", " ", "and", " ", "TR"}], "-", 
+     RowBox[{
+     "odd", " ", "component", " ", "of", " ", "the", " ", "tensor"}]}], " ", 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"naxial", ",", "nTR"}], "}"}], "=", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "1"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"Set", " ", "operations", " ", 
+     RowBox[{"{", "XR", "}"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"MPG", "=", 
+     RowBox[{"{", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "C3z"}], "}"}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Set", " ", "rotation", " ", "spec", " ", "spin", " ", "and", " ", "orbi",
+      " ", "for", " ", "u", " ", "and", " ", "R", " ", "in", " ", 
+     RowBox[{"{", "XR", "}"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"rotspec", "=", 
+     RowBox[{"{", 
+      RowBox[{"\"\<rot\>\"", ",", "\"\<rot\>\"", ",", "\"\<rot\>\""}], 
+      "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"rotspec", "=", 
+     RowBox[{"{", 
+      RowBox[{"\"\<rot\>\"", ",", "\"\<rot\>\""}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Set", " ", "general", " ", "form", " ", "of", " ", "rank4", " ", 
+     "tensor"}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"chi", "=", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       SubscriptBox["\[Chi]", 
+        RowBox[{"a", "<>", "b", "<>", "c"}]], ",", 
+       RowBox[{"{", 
+        RowBox[{"a", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<x\>\"", ",", "\"\<y\>\"", ",", "\"\<z\>\""}], "}"}]}], 
+        "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"b", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<x\>\"", ",", "\"\<y\>\"", ",", "\"\<z\>\""}], "}"}]}], 
+        "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"c", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<x\>\"", ",", "\"\<y\>\"", ",", "\"\<z\>\""}], "}"}]}], 
+        "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"chi", "=", "chiRank2"}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"apply", " ", "symmetry"}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"chisym", ",", "condition"}], "}"}], "=", 
+     RowBox[{"getMPGEnforcedTensor", "[", 
+      RowBox[{
+      "rotspec", ",", "chi", ",", "MPG", ",", "internalSymm", ",", "naxial", 
+       ",", "nTR"}], "]"}]}], ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.9677113063434057`*^9, 3.967711310484885*^9}, {
+   3.967711608322586*^9, 3.967711751183305*^9}, {3.967711809218381*^9, 
+   3.967711907542293*^9}, {3.967759740285242*^9, 3.967759811647358*^9}, {
+   3.967760153383196*^9, 3.96776017843252*^9}, {3.967760271352317*^9, 
+   3.967760307695652*^9}, {3.967760502942527*^9, 3.9677606030172358`*^9}, {
+   3.967760698960519*^9, 3.967760715002026*^9}, {3.967762207939198*^9, 
+   3.967762208190466*^9}, {3.96776228648092*^9, 3.967762286700369*^9}, 
+   3.9677626920015574`*^9, {3.9677627758982162`*^9, 3.967762778428342*^9}, {
+   3.967762821347568*^9, 3.967762866480673*^9}, {3.967762912665167*^9, 
+   3.967762912858292*^9}},
+ CellLabel->
+  "In[250]:=",ExpressionUUID->"62bf12ca-1440-49b6-abe8-ddd34e1bb3a0"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      SubscriptBox["\[Chi]", "\<\"xx\"\>"], 
+      SubscriptBox["\[Chi]", "\<\"xy\"\>"], 
+      SubscriptBox["\[Chi]", "\<\"xz\"\>"]},
+     {
+      SubscriptBox["\[Chi]", "\<\"yx\"\>"], 
+      SubscriptBox["\[Chi]", "\<\"yy\"\>"], 
+      SubscriptBox["\[Chi]", "\<\"yz\"\>"]},
+     {
+      SubscriptBox["\[Chi]", "\<\"zx\"\>"], 
+      SubscriptBox["\[Chi]", "\<\"zy\"\>"], 
+      SubscriptBox["\[Chi]", "\<\"zz\"\>"]}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Print",
+ CellChangeTimes->{
+  3.967711313876121*^9, 3.967711926532311*^9, 3.967712146439933*^9, 
+   3.9677603295788813`*^9, {3.967760610296671*^9, 3.9677606393302603`*^9}, {
+   3.967760674463213*^9, 3.9677607158250227`*^9}, 3.967760758027261*^9, 
+   3.967760907900118*^9, 3.96776107930685*^9, 3.9677611104587584`*^9, {
+   3.967761154484438*^9, 3.967761181995648*^9}, 3.967761388948979*^9, 
+   3.967762208982999*^9, 3.9677622452343893`*^9, {3.967762686814569*^9, 
+   3.967762692648345*^9}, 3.9677627788107452`*^9, {3.967762821938683*^9, 
+   3.9677628251030188`*^9}, 3.967762867882518*^9, {3.967762901958829*^9, 
+   3.967762913167535*^9}},
+ CellLabel->
+  "During evaluation of \
+In[250]:=",ExpressionUUID->"7a8cd0b7-b840-4313-ad52-968f925c793c"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      SubscriptBox["\[Chi]", "\<\"xx\"\>"], 
+      SubscriptBox["\[Chi]", "\<\"xy\"\>"], "0"},
+     {
+      RowBox[{"-", 
+       SubscriptBox["\[Chi]", "\<\"xy\"\>"]}], 
+      SubscriptBox["\[Chi]", "\<\"xx\"\>"], "0"},
+     {"0", "0", 
+      SubscriptBox["\[Chi]", "\<\"zz\"\>"]}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Print",
+ CellChangeTimes->{
+  3.967711313876121*^9, 3.967711926532311*^9, 3.967712146439933*^9, 
+   3.9677603295788813`*^9, {3.967760610296671*^9, 3.9677606393302603`*^9}, {
+   3.967760674463213*^9, 3.9677607158250227`*^9}, 3.967760758027261*^9, 
+   3.967760907900118*^9, 3.96776107930685*^9, 3.9677611104587584`*^9, {
+   3.967761154484438*^9, 3.967761181995648*^9}, 3.967761388948979*^9, 
+   3.967762208982999*^9, 3.9677622452343893`*^9, {3.967762686814569*^9, 
+   3.967762692648345*^9}, 3.9677627788107452`*^9, {3.967762821938683*^9, 
+   3.9677628251030188`*^9}, 3.967762867882518*^9, {3.967762901958829*^9, 
+   3.967762913169379*^9}},
+ CellLabel->
+  "During evaluation of \
+In[250]:=",ExpressionUUID->"35870c1d-ee73-43b4-a02b-53e55a306f59"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"condition is: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"xz\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"yx\"\>"], "\[Rule]", 
+      RowBox[{"-", 
+       SubscriptBox["\[Chi]", "\<\"xy\"\>"]}]}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"yy\"\>"], "\[Rule]", 
+      SubscriptBox["\[Chi]", "\<\"xx\"\>"]}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"yz\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"zx\"\>"], "\[Rule]", "0"}], ",", 
+     RowBox[{
+      SubscriptBox["\[Chi]", "\<\"zy\"\>"], "\[Rule]", "0"}]}], "}"}]}],
+  SequenceForm[
+  "condition is: ", {
+   Subscript[TensorSymmetry`\[Chi], "xz"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "yx"] -> -
+     Subscript[TensorSymmetry`\[Chi], "xy"], 
+    Subscript[TensorSymmetry`\[Chi], "yy"] -> 
+    Subscript[TensorSymmetry`\[Chi], "xx"], 
+    Subscript[TensorSymmetry`\[Chi], "yz"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "zx"] -> 0, 
+    Subscript[TensorSymmetry`\[Chi], "zy"] -> 0}],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.967711313876121*^9, 3.967711926532311*^9, 3.967712146439933*^9, 
+   3.9677603295788813`*^9, {3.967760610296671*^9, 3.9677606393302603`*^9}, {
+   3.967760674463213*^9, 3.9677607158250227`*^9}, 3.967760758027261*^9, 
+   3.967760907900118*^9, 3.96776107930685*^9, 3.9677611104587584`*^9, {
+   3.967761154484438*^9, 3.967761181995648*^9}, 3.967761388948979*^9, 
+   3.967762208982999*^9, 3.9677622452343893`*^9, {3.967762686814569*^9, 
+   3.967762692648345*^9}, 3.9677627788107452`*^9, {3.967762821938683*^9, 
+   3.9677628251030188`*^9}, 3.967762867882518*^9, {3.967762901958829*^9, 
+   3.967762913171132*^9}},
+ CellLabel->
+  "During evaluation of \
+In[250]:=",ExpressionUUID->"a8209618-8955-43c3-8a92-b3f73ca40c71"]
+}, Open  ]]
+}, Open  ]]
+}, Closed]]
+}, Open  ]]
+},
+WindowSize->{1511, 1027},
+WindowMargins->{{Automatic, -1771}, {Automatic, 0}},
+Magnification:>1.5 Inherited,
+FrontEndVersion->"13.0 for Mac OS X ARM (64-bit) (December 2, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"8da6b0d0-d6e3-4235-9865-5b16b3555cb2"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 200, 4, 146, "Title",ExpressionUUID->"ad8afd0b-1ae5-4962-ba02-41009f429a54"],
+Cell[783, 28, 163, 3, 46, "Input",ExpressionUUID->"c1801cb7-bc42-4a30-acae-e32044bdb2ed"],
+Cell[CellGroupData[{
+Cell[971, 35, 397, 6, 79, "Subtitle",ExpressionUUID->"3163555b-f62a-4c5b-9201-39d5c9dce51c"],
+Cell[CellGroupData[{
+Cell[1393, 45, 4086, 104, 607, "Input",ExpressionUUID->"d22ecfde-1d48-48fa-adac-e6d7718c9630"],
+Cell[CellGroupData[{
+Cell[5504, 153, 4844, 118, 88, "Print",ExpressionUUID->"55d945db-bfaa-4d7c-b401-66f440a97988"],
+Cell[10351, 273, 2567, 68, 86, "Print",ExpressionUUID->"c40534d0-18cc-4ca4-95a2-0d1db0a02cf4"],
+Cell[12921, 343, 4031, 93, 71, "Print",ExpressionUUID->"fdcf1f9d-e53a-4a7c-b1ee-52a243d4579a"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17013, 443, 423, 6, 79, "Subtitle",ExpressionUUID->"8c4c5ad6-7bd0-4e49-b30a-9e3cbeae665f"],
+Cell[CellGroupData[{
+Cell[17461, 453, 4167, 105, 653, "Input",ExpressionUUID->"62bf12ca-1440-49b6-abe8-ddd34e1bb3a0"],
+Cell[CellGroupData[{
+Cell[21653, 562, 1609, 38, 88, "Print",ExpressionUUID->"7a8cd0b7-b840-4313-ad52-968f925c793c"],
+Cell[23265, 602, 1472, 35, 86, "Print",ExpressionUUID->"35870c1d-ee73-43b4-a02b-53e55a306f59"],
+Cell[24740, 639, 1911, 43, 39, "Print",ExpressionUUID->"a8209618-8955-43c3-8a92-b3f73ca40c71"]
+}, Open  ]]
+}, Open  ]]
+}, Closed]]
+}, Open  ]]
+}
+]
+*)
+
