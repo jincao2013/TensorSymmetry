@@ -1,2 +1,2 @@
 # TensorSymmetry
-Get symmetry constraint from magnetic point group or magnetic spin group
+Get symmetry constraints from magnetic point groups or spin groups. 
